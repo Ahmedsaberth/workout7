@@ -4319,7 +4319,10 @@ document.getElementById("settingsCard").addEventListener("click",function(e){
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredPrompt=e;if(state.view==="settings")renderSettings();});
 window.addEventListener("appinstalled",function(){deferredPrompt=null;toast("✔ اتثبت التطبيق");if(state.view==="settings")renderSettings();});
 if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){
-  window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});
+  window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(r){r.update();}).catch(function(){});});
+  /* لما نسخة جديدة من التطبيق تشتغل، اعمل تحديث مرة واحدة عشان تظهر على طول */
+  var hadSW=!!navigator.serviceWorker.controller,swReloaded=false;
+  navigator.serviceWorker.addEventListener("controllerchange",function(){if(!hadSW||swReloaded)return;swReloaded=true;location.reload();});
 }
 
 /* ====================== الشاشة متطفيش (Wake Lock) ====================== */

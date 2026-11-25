@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ahmed-saber-workout-v4';
+const CACHE_NAME = 'ahmed-saber-workout-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -22,14 +22,35 @@ self.addEventListener('activate', event => {
   );
 });
 
+function isPage(req) {
+  return req.mode === 'navigate' || new URL(req.url).pathname.endsWith('/index.html');
+}
+
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  const req = event.request;
+
+  // الصفحة نفسها: من النت الأول عشان أي تعديل يظهر على طول، ولو مفيش نت من الكاش
+  if (isPage(req)) {
+    event.respondWith(
+      fetch(req, { cache: 'no-store' }).then(resp => {
+        if (resp && resp.status === 200) {
+          const clone = resp.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put('./index.html', clone));
+        }
+        return resp;
+      }).catch(() => caches.match('./index.html').then(c => c || caches.match('./')))
+    );
+    return;
+  }
+
+  // باقي الملفات (أيقونات وغيرها): من الكاش وبتتحدث في الخلفية
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      const fetchPromise = fetch(event.request).then(networkResp => {
-        if (networkResp && networkResp.status === 200 && event.request.url.startsWith(self.location.origin)) {
+    caches.match(req).then(cached => {
+      const fetchPromise = fetch(req).then(networkResp => {
+        if (networkResp && networkResp.status === 200 && req.url.startsWith(self.location.origin)) {
           const clone = networkResp.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
         }
         return networkResp;
       }).catch(() => cached);
