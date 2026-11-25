@@ -1259,66 +1259,6 @@ html[data-theme="gold"]{--surface:#1A1712;--surface2:#211D16;--pink:#E0464E}
 html[data-theme="chalk"]{--surface:#FFFFFF;--surface2:#F5F7FA;--pink:#DC2626;--line:rgba(18,26,42,0.10)}
 html[data-theme="oled"]{--surface:#0A0A0A;--surface2:#121214;--pink:#FF375F;--line:rgba(255,255,255,0.10)}
 
-/* 1. Dynamic Island Rest Timer */
-.island-wrap{
-  position:-webkit-sticky;position:sticky;
-  top:calc(env(safe-area-inset-top) + 74px);
-  z-index:45;display:flex;justify-content:center;
-  margin:10px auto 6px;padding:0 16px;max-width:520px;
-  pointer-events:none;
-}
-.dynamic-island{
-  pointer-events:auto;
-  background:#000;border:1px solid rgba(255,255,255,0.14);border-radius:40px;
-  padding:8px 18px;display:flex;align-items:center;gap:12px;
-  box-shadow:0 12px 30px rgba(0,0,0,0.6);cursor:pointer;
-  transition:all 0.5s var(--bounce);min-width:215px;width:auto;justify-content:space-between;
-  color:#F5F7FA;
-}
-.dynamic-island.expanded{
-  width:100%;padding:12px 20px;border-color:var(--green);
-  box-shadow:0 0 25px rgba(50,215,75,0.25),0 12px 30px rgba(0,0,0,0.6);
-  flex-wrap:wrap;border-radius:28px;
-}
-.dynamic-island.expanded.warn{
-  border-color:var(--yellow);
-  box-shadow:0 0 25px rgba(255,226,61,0.28),0 12px 30px rgba(0,0,0,0.6);
-}
-.dynamic-island.expanded.crit{
-  border-color:var(--pink);
-  box-shadow:0 0 28px rgba(255,55,95,0.45),0 12px 30px rgba(0,0,0,0.6);
-}
-.dynamic-island.ss-mode{
-  border-color:var(--yellow);width:94%;
-  box-shadow:0 0 25px rgba(255,226,61,0.3),0 12px 30px rgba(0,0,0,0.6);
-}
-.di-dot{
-  width:10px;height:10px;border-radius:50%;background:var(--green);
-  animation:diPulse 1.5s infinite;flex:0 0 auto;
-}
-.dynamic-island.ss-mode .di-dot,.dynamic-island.expanded.warn .di-dot{background:var(--yellow)}
-.dynamic-island.expanded.crit .di-dot{background:var(--pink)}
-@keyframes diPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:0.5}}
-.di-main-row{display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px}
-.di-left{display:flex;align-items:center;gap:8px;min-width:0}
-.di-lbl{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.di-val{font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:700;color:var(--green);direction:ltr;flex:0 0 auto}
-.dynamic-island.ss-mode .di-val,.dynamic-island.expanded.warn .di-val{color:var(--yellow)}
-.dynamic-island.expanded.crit .di-val{color:var(--pink)}
-.di-sub-row{
-  display:flex;align-items:center;justify-content:space-between;gap:6px;
-  width:100%;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.1);
-}
-.di-sub-txt{font-size:11px;font-weight:700;color:var(--muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.di-sub-txt b{color:var(--cyan)}
-.di-mini-btns{display:flex;gap:5px;flex:0 0 auto}
-.di-mini-btns button{
-  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.14);color:#fff;
-  border-radius:10px;padding:3px 9px;font-family:'Chakra Petch','Cairo',sans-serif;font-size:11px;font-weight:700;cursor:pointer;
-}
-.di-mini-btns button.smart{background:var(--yellow);color:#000;border-color:var(--yellow);font-weight:900}
-.di-mini-btns button.skip{color:var(--pink);border-color:rgba(255,55,95,0.4)}
-
 /* 2. Concentric Activity Rings Header (.kinetic-header) */
 .kinetic-header{
   background:rgba(21,26,36,0.75);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
@@ -1791,17 +1731,6 @@ html[data-theme="chalk"] .sets-wrap{background:rgba(245,247,250,0.8)}
 </header>
 
 <nav class="tabs"><div class="tabs-inner" id="tabs"></div></nav>
-<div class="island-wrap" id="islandWrap">
-  <div class="dynamic-island" id="island">
-    <div class="di-main-row">
-      <div class="di-left">
-        <span class="di-dot" id="diDot"></span>
-        <span class="di-lbl" id="diLabel">القائمة الكاملة نشطة</span>
-      </div>
-      <b class="en di-val" id="diTime">DAY 1</b>
-    </div>
-  </div>
-</div>
 
 <main>
  <div id="dayView">
@@ -2319,8 +2248,8 @@ var FEATS=[
  {k:"prChance",n:"🎯 فرصة رقم قياسي",d:"يقولك أنهي تمرين النهارده أقرب تكسر فيه رقمك"},
  {k:"precise",n:"🎯 بدائل بنفس الزاوية",d:"لما تدوس بديل يظهر كل التمارين بنفس الرأس أو الجزء بالظبط، مش أي تمرين في نفس العضلة. الأقرب في الزاوية الأول وبعدين المتاح في جيمك. لو قفلتها يرجع النظام القديم: ٤ أشكال على المجموعة العامة."}
 ];
-var RT_DEF={style:"island",size:"m",shape:"ring",colors:true,drag:true,panel:true,lp:true,over:true,pulse:true,dim:true,smart:true,ss:true};
-var RT_OPTS={style:[{v:"island",n:"🏝️ الجزيرة التفاعلية"},{v:"bubble",n:"⭕ فقاعة عايمة"},{v:"bar",n:"▬ الشريط القديم"}],size:[{v:"s",n:"صغير"},{v:"m",n:"متوسط"},{v:"l",n:"كبير"}],
+var RT_DEF={style:"bubble",size:"m",shape:"ring",colors:true,drag:true,panel:true,lp:true,over:true,pulse:true,dim:true,smart:true,ss:true};
+var RT_OPTS={style:[{v:"bubble",n:"⭕ فقاعة عايمة"},{v:"bar",n:"▬ الشريط القديم"}],size:[{v:"s",n:"صغير"},{v:"m",n:"متوسط"},{v:"l",n:"كبير"}],
   shape:[{v:"ring",n:"حلقة بتقل"},{v:"fill",n:"ساعة رملية"}]};
 var RT_TG=[
  {k:"colors",n:"🎨 ألوان الحلقة بتتغير",d:"أخضر ← أصفر في آخر ٣٠٪ ← أحمر في آخر ١٠ ثواني"},
@@ -2797,6 +2726,7 @@ function normalize(s){
     tips:st0.tips!==false,target:st0.target!==false,collapseDone:st0.collapseDone!==false,autoNext:st0.autoNext!==false,
     autoDone:st0.autoDone===true,autoToday:st0.autoToday===true,vibSS:st0.vibSS!==false,feat:{}};
   var r0=st0.rt||{};s.settings.rt={};Object.keys(RT_DEF).forEach(function(k){s.settings.rt[k]=r0[k]!==undefined?r0[k]:RT_DEF[k];});
+  if(s.settings.rt.style==="island")s.settings.rt.style="bubble";
   if(r0.pos&&typeof r0.pos==="object")s.settings.rt.pos=r0.pos;
 
   FEATS.forEach(function(f){s.settings.feat[f.k]=!(st0.feat&&st0.feat[f.k]===false);});
@@ -3394,7 +3324,6 @@ function render(){
     else if(state.view==="home")renderHome();
     else if(state.view==="lib")renderLibView();
     else renderHistory();
-    updateIslandUI();
     syncWake();
     return;
   }
@@ -3438,7 +3367,6 @@ function render(){
   var khBox=document.getElementById("kineticHeaderBox");
   if(khBox)khBox.innerHTML=kineticHeaderHTML();
   refreshProgress();
-  updateIslandUI();
   syncWake();
 }
 /* ====================== التأجيل لآخر اليوم ====================== */
@@ -4364,12 +4292,10 @@ document.getElementById("settingsCard").addEventListener("click",function(e){
   var rbo=e.target.closest("button[data-rtopt]");
   if(rbo){state.settings.rt[rbo.dataset.rtopt]=rbo.dataset.val;save();renderRtSet();
     if(tState==="run"||tState==="over"||tState==="ss"){
-      if(islandOn()){hideBubble();tbar.classList.remove("show");updateIslandUI();tick();}
-      else if(bubbleOn()){tbar.classList.remove("show");updateIslandUI();showBubble();if(tState==="ss")drawBubble(1,"⚡");else tick();}
-      else{hideBubble();updateIslandUI();if(tState==="run")tbar.classList.add("show");}
+      if(bubbleOn()){tbar.classList.remove("show");showBubble();if(tState==="ss")drawBubble(1,"⚡");else tick();}
+      else{hideBubble();if(tState==="run")tbar.classList.add("show");}
     }else{
-      hideBubble();tbar.classList.remove("show");updateIslandUI();
-    }
+      hideBubble();tbar.classList.remove("show");}
     return;}
   if(e.target.closest("button[data-rttest]")){startTimer(15,"تجربة المؤقت",{next:"ده مؤقت تجريبي — جرّب تسحبه وتدوس عليه"});return;}
   if(e.target.closest("button[data-rtpos]")){delete state.settings.rt.pos;save();if(!rb.hidden)placeBubble();toast("↺ الفقاعة رجعت مكانها");return;}
@@ -5045,7 +4971,7 @@ function renderNutrition(){
 /* ====================== إعدادات: المميزات + الجيم ====================== */
 function renderRtSet(){
   var r=state.settings.rt,on=RT_TG.filter(function(t){return r[t.k]!==false;}).length;
-  document.getElementById("rtCount").textContent=(r.style==="island"?"الجزيرة":r.style==="bubble"?"فقاعة":"شريط")+" • "+on+" من "+RT_TG.length+" شغالين";
+  document.getElementById("rtCount").textContent=(r.style==="bubble"?"فقاعة":"شريط")+" • "+on+" من "+RT_TG.length+" شغالين";
   document.getElementById("rtBox").innerHTML=
     ["style","size","shape"].map(function(k){var lbl={style:"الشكل",size:"المقاس",shape:"الدايرة"}[k];
       return '<div class="opt"><span class="opt-t">'+lbl+'</span><div class="opt-c">'+RT_OPTS[k].map(function(o){
@@ -5794,7 +5720,6 @@ function buzz(kind){
 }
 function rt(k){var o=state.settings.rt||RT_DEF;return o[k]!==undefined?o[k]:RT_DEF[k];}
 var tState=null,tMeta={},rb=document.getElementById("rb"),rbP=document.getElementById("rbP"),RBC=2*Math.PI*44,dimT=null;
-function islandOn(){return rt("style")==="island";}
 function bubbleOn(){return rt("style")==="bubble";}
 function fmtS(sec){sec=Math.max(0,Math.round(sec));var m=Math.floor(sec/60),x=sec%60;return m+":"+(x<10?"0":"")+x;}
 function startTimer(sec,label,meta){
@@ -5802,9 +5727,8 @@ function startTimer(sec,label,meta){
   total=sec;endAt=Date.now()+sec*1000;tick.soon=0;tState="run";tMeta=meta||{};tMeta.label=label||tMeta.label||"";
   tLabel.textContent="⏱ راحة — "+tMeta.label;
   rb.classList.remove("go","over");
-  if(islandOn()){tbar.classList.remove("show");hideBubble();updateIslandUI(sec,fmtS(sec));}
-  else if(bubbleOn()){tbar.classList.remove("show");updateIslandUI();showBubble();}
-  else{hideBubble();updateIslandUI();tbar.classList.add("show");}
+  if(bubbleOn()){tbar.classList.remove("show");showBubble();}
+  else{hideBubble();tbar.classList.add("show");}
   timer=setInterval(tick,250);
   tick();
   if(bubbleOn()&&!rbP.hidden)renderPanel();
@@ -5812,16 +5736,14 @@ function startTimer(sec,label,meta){
 function tick(){ /* بيحسب من وقت النهاية الحقيقي، فمش بيتأخر لو الموبايل قفل الشاشة */
   if(tState==="over"){
     var ov=(Date.now()-endAt)/1000;if(ov>600){hideTimer();return;}
-    if(islandOn())updateIslandUI(0,"+"+fmtS(ov));
-    else if(bubbleOn())drawBubble(0,"+"+fmtS(ov));
+    if(bubbleOn())drawBubble(0,"+"+fmtS(ov));
     return;
   }
   if(tState!=="run")return;
   var left=Math.max(0,Math.ceil((endAt-Date.now())/1000)),m=Math.floor(left/60),x=left%60;
   tTime.textContent=(m<10?"0":"")+m+":"+(x<10?"0":"")+x;
   tFill.style.width=(total?left/total*100:0)+"%";
-  if(islandOn())updateIslandUI(left,fmtS(left));
-  else if(bubbleOn())drawBubble(left,fmtS(left));
+  if(bubbleOn())drawBubble(left,fmtS(left));
   if(left===5&&total>=20&&!tick.soon){tick.soon=1;buzz("soon");}
   if(left<=0)finishTimer();
 }
@@ -5829,17 +5751,14 @@ function finishTimer(){
   var line=feat("coach")?coachLine("restEnd"):"🔥 يلا! المجموعة الجاية";
   tTime.textContent="GO!";tLabel.textContent=line;
   buzz("rest");
-  if(islandOn()){
-    if(rt("over")){tState="over";updateIslandUI(0,"GO");}
-    else{clearInterval(timer);timer=null;tState="done";updateIslandUI(0,"GO");setTimeout(function(){if(tState==="done")hideTimer();},2600);}
-  }else if(bubbleOn()){
+  if(bubbleOn()){
     if(rt("pulse"))rb.classList.add("go");
     if(rt("over")){tState="over";drawBubble(0,"GO");}
     else{clearInterval(timer);timer=null;tState="done";drawBubble(0,"GO");setTimeout(function(){if(tState==="done")hideTimer();},2600);}
   }else{clearInterval(timer);timer=null;tState=null;setTimeout(function(){if(!timer)tbar.classList.remove("show");},2500);}
   coach("restEnd");
 }
-function hideTimer(){clearInterval(timer);timer=null;tState=null;tbar.classList.remove("show");hideBubble();updateIslandUI();}
+function hideTimer(){clearInterval(timer);timer=null;tState=null;tbar.classList.remove("show");hideBubble();}
 document.getElementById("tbClose").onclick=hideTimer;
 tbar.addEventListener("click",function(e){var b=e.target.closest("button[data-s]");if(b)startTimer(+b.dataset.s,tMeta.label||"",tMeta);});
 /* ⭕ الفقاعة */
@@ -5853,53 +5772,6 @@ function placeBubble(){
 }
 function showBubble(){rb.hidden=false;rb.className="rb sz-"+rt("size")+" sh-"+rt("shape")+(tState==="ss"?" ssm":"");placeBubble();renderBadge();}
 function hideBubble(){rb.hidden=true;rb.classList.remove("go","over");rbP.hidden=true;}
-function updateIslandUI(left,txt){
-  var wrap=document.getElementById("islandWrap"),isl=document.getElementById("island");
-  if(!wrap||!isl)return;
-  if(!islandOn()){
-    wrap.style.display="none";
-    isl.className="dynamic-island";
-    return;
-  }
-  wrap.style.display="flex";
-  var d=state.day||0,day=DAYS[d]||DAYS[0],dp=dayPct(d);
-  if(tState==="ss"){
-    isl.className="dynamic-island ss-mode";
-    isl.innerHTML='<div class="di-main-row" data-diss="'+tMeta.go+'">'+
-      '<div class="di-left"><span class="di-dot"></span><span class="di-lbl">⚡ روح للتمرين التاني فوراً! ('+esc(tMeta.label||"")+')</span></div>'+
-      '<b class="en di-val">بدون راحة</b></div>';
-    return;
-  }
-  if(tState==="run"||tState==="over"||tState==="done"){
-    var lv=typeof left==="number"?left:Math.max(0,Math.ceil((endAt-Date.now())/1000));
-    var m=Math.floor(lv/60),s=lv%60;
-    var tx=txt||(tState==="over"?"+"+fmtS((Date.now()-endAt)/1000):(m<10?"0":"")+m+":"+(s<10?"0":"")+s);
-    var pct=total?Math.max(0,Math.min(1,lv/total)):0;
-    var phCls=tState==="over"||lv<=10?" crit":(pct<=0.3?" warn":"");
-    isl.className="dynamic-island expanded"+phCls;
-    var sm=rt("smart")&&tMeta.smart&&tState==="run";
-    isl.innerHTML='<div class="di-main-row">'+
-        '<div class="di-left"><span class="di-dot"></span><span class="di-lbl">⏱️ راحة التمرين — اضغط +15s</span></div>'+
-        '<b class="en di-val" id="diTime">'+tx+'</b>'+
-      '</div>'+
-      '<div class="di-sub-row">'+
-        '<span class="di-sub-txt">'+(sm?'💡 '+tMeta.smart.why:(tMeta.next||esc(tMeta.label||"")))+'</span>'+
-        '<div class="di-mini-btns">'+
-          (sm?'<button type="button" class="smart" data-diadd="'+tMeta.smart.d+'" data-dismart="1">'+(tMeta.smart.d>0?"+":"−")+Math.abs(tMeta.smart.d)+'s</button>':'')+
-          '<button type="button" data-diadd="-15">-15s</button>'+
-          '<button type="button" data-diadd="15">+15s</button>'+
-          '<button type="button" class="skip" data-diskip="1">✕</button>'+
-        '</div>'+
-      '</div>';
-    return;
-  }
-  isl.className="dynamic-island";
-  var modeLbl=dp===100?"اكتمل تمرين اليوم ✔":(dp>0?"إنجاز اليوم • "+dp+"%":"القائمة الكاملة نشطة");
-  isl.innerHTML='<div class="di-main-row">'+
-    '<div class="di-left"><span class="di-dot" id="diDot"></span><span class="di-lbl" id="diLabel">'+modeLbl+'</span></div>'+
-    '<b class="en di-val" id="diTime">'+(day?day.en:"DAY 1")+'</b>'+
-  '</div>';
-}
 function drawBubble(left,txt){
   var pct=tState==="ss"?1:(total?left/total:0),prog=rb.querySelector(".rb-pr");
   document.getElementById("rbT").textContent=txt;
@@ -5914,9 +5786,8 @@ function renderBadge(){var bd=document.getElementById("rbB"),sm=rt("smart")&&tMe
 function showSS(goIdx,name){
   if(!rt("ss")){toast("⚡ سوبر سِت — روح على "+name+" على طول");return;}
   clearInterval(timer);timer=null;tState="ss";tMeta={go:goIdx,label:name};total=1;
-  if(islandOn()){hideBubble();tbar.classList.remove("show");updateIslandUI(1,"⚡");}
-  else if(bubbleOn()){tbar.classList.remove("show");updateIslandUI();showBubble();drawBubble(1,"⚡");}
-  else{hideBubble();updateIslandUI();toast("⚡ سوبر سِت — روح على "+name+" على طول");}
+  if(bubbleOn()){tbar.classList.remove("show");showBubble();drawBubble(1,"⚡");}
+  else{hideBubble();toast("⚡ سوبر سِت — روح على "+name+" على طول");}
   setTimeout(function(){if(tState==="ss")hideTimer();},180000);
 }
 function bubbleTap(){
@@ -5973,35 +5844,7 @@ window.addEventListener("resize",function(){if(!rb.hidden)placeBubble();});
   rb.addEventListener("pointercancel",function(){down=false;clearTimeout(lpT);if(drag){rb.classList.remove("dragging");placeBubble();drag=false;}});
 })();
 
-/* ====================== DYNAMIC ISLAND & SMART JOINT PREP EVENTS ====================== */
-document.getElementById("island").addEventListener("click",function(e){
-  var b=e.target.closest("button");
-  if(b){
-    e.stopPropagation();
-    if(b.dataset.diadd){
-      var dd=+b.dataset.diadd;
-      if(tState==="run"){endAt+=dd*1000;total=Math.max(5,total+dd);if(endAt<Date.now()+1000)endAt=Date.now()+1000;}
-      else startTimer(Math.max(5,dd>0?dd:15),tMeta.label,tMeta);
-      if(b.dataset.dismart)tMeta.smart=null;
-      renderBadge();tick();if(!rbP.hidden)renderPanel();
-      return;
-    }
-    if(b.dataset.diskip){hideTimer();return;}
-  }
-  if(tState==="ss"&&tMeta.go!==undefined){
-    var gi=+tMeta.go;hideTimer();
-    if(state.view!=="day"){state.view="day";save();render();}
-    var c=document.getElementById("card-"+gi);if(c)c.scrollIntoView({behavior:"smooth",block:"start"});
-    return;
-  }
-  if(tState==="run"){
-    endAt+=15000;total+=15;tick();toast("⏱️ +15 ثانية للراحة");
-    return;
-  }
-  if(tState==="over"||tState==="done"){hideTimer();return;}
-  if(state.view!=="day"){state.view="day";save();render();}
-});
-
+/* ====================== SMART JOINT PREP EVENTS ====================== */
 document.getElementById("homeView").addEventListener("click",function(e){
   var vj=e.target.closest("button[data-jpvid]");
   if(vj){
